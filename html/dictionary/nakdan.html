@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html dir="RTL">
+<head>
+  <title>נקדן קולמוס</title>
+  <LINK REL=StyleSheet HREF="culmus-dict.css" TYPE="text/css">
+  <LINK REL=StyleSheet HREF="terwan-dict.css" TYPE="text/css">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="keywords"
+ content="culmus, hebrew, nakdan, linux, posix, free, gfdl">
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+</head>
+<body class="main">
+<div class="tmenu"></div>
+<script  language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function() {
+	$('.tmenu').load('terwan-dict.html');
+});
+</script>
+<h1>נקדן אוטומטי</h1>
+<p>תוסף לניקוד חצי-אוטומטי עבור <a href="http://www.libreoffice.org/" target="_top">ליברה-אופיס</a>. מאגר הנתונים מבוסס על ויקימילון.</p>
+<h2><A name="release"></A>העדכון האחרון: 29 באוקטובר 2014.
+<a href="http://sourceforge.net/projects/culmus/files/language_tools/nakdan/20141029/" target="_top">להורדה</a></h2>
+<h2><A name="install"></A>כיצד מתקינים?</h2>
+<ol style="list-style-type:hebrew">
+<li>התקינו את הקובץ <tt><a href="http://sourceforge.net/projects/culmus/files/language_tools/nakdan/20141029/CulmusOOoNakdan.20141029.oxt/download">CulmusOOoNakdan.20141029.oxt</a></tt> באמצעות מנהל החבילות של ליברה אופיס (בתפריט העליון "כלים" -> "מנהל החבילות").</li>
+<li>הפעילו את תוכנת האופיס מחדש.</li>
+<li>לאחר ההפעלה מחדש, וודאו כי התוסף מופעל בתיבת "כלים" -> "אפשרויות" -> "הגדרות שפה" -> "עזרי כתיבה". הנקדן מופיע בתיבת "מודולי שפה" בשם "Nakdan by Culmus".
+<li>כעת הנקדן זמין בלחיצת הכפתור הימני של העכבר על המילה המבוקשת ובחירת "Synonyms" מתוך התפריט.</li>
+</ol>
+<h2><A name="screenshots"></A>צילומי מסך</h2>
+<table><tr>
+  <td width="33%"><a href="shot1.png"><img src="shot1.png" width="100%"></a></td>
+  <td width="33%"><a href="shot2.png"><img src="shot2.png" width="100%"></a></td>
+  <td width="33%"><a href="shot3.png"><img src="shot3.png" width="100%"></a></td>
+</tr></table>
+<h2><A name="license"></A>רשיון</h2>
+<p>התוכנה מופצת ברשיון הציבורי הכללי של GNU, גרסה 2. זכות יוצרים שמורה למקסים יורש, אלא אם מצויין אחרת בגוף הקבצים.</p>
+<h2><A name="errors"></A>תקלות נפוצות</h2>
+<p>אם רשימת "Synonyms" לכל מילה מסתכמת בכיתוב "(אין)" או שאינה מובנת, בחרו בסעיף "מילים נרדפות...". תיפתח תיבת דו-שיח עם פירוט הבעיה.</p>
+<p>להלן רשימת הודעות שגיאה שהנקדן עלול להציג ודרכי ההתמודדות עמן:</p>
+<ul>
+  <li><b>Error: 'hspell' missing</b> - תוכנת hspell לא נמצאה ב-<span dir="ltr">$PATH</span>.</li>
+  <li><b>Error: 'hspell' compiled without --enable-linginfo option</b> - יש להתקין hspell עם ניתוח לשוני מופעל על-פי ההוראות להלן. אנא וודאו שכל גרסה אחרת של hspell הוסרה לפני כן, כדי למנוע התנגשות. הריצו משורת הפקודה:
+<pre dir="LTR">
+wget http://hspell.ivrix.org.il/hspell-1.2.tar.gz
+tar -zxvf hspell-1.2.tar.gz 
+cd hspell-1.2
+./configure --enable-linginfo
+make
+sudo make install
+</pre></li>
+  <li><b>חלק דיבר לא נתמך</b> - בשלב זה ניתן לנקד שמות עצם, מילות יחס ומספרים בלבד. חלקי דיבר אחרים, כגון שמות תואר ופעלים אינם נתמכים בגרסה זו.</li>
+  <li><b>צורה לא נתמכת</b> - צורות שם עצם עם כינוי גוף (לדוגמה, "מחשבך") אינן נתמכות.</li>
+  <li><b>ערך חסר בוויקימילון</b> - שגיאה כשמה כן היא. אתם מוזמנים להכנס לוויקימילון ולתרום את הערך החסר.</li>
+  <li><b>מילה חסרה</b> - צורת רבים או צורת סמיכות חסרה בערך המתאים בוויקימילון. גם כאן, אתם מוזמנים לתקן את העיוות.</li>
+</ul>
+<p>הערה: אם תיקנתם או הוספתם ערך בוויקימילון, השינוי לא יופיע מיד בנקדן, כי הנקדן משתמש בבסיס נתונים סטטי ולא מתחבר לאתר ויקימילון בזמן אמת. נא לכתוב לרשימת התפוצה או למפתח, והנקדן יעודכן.</p>
+</body>
+</html>

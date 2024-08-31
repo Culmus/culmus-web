@@ -1,0 +1,83 @@
+#!/usr/local/bin/pfaedit
+
+/* This script for PfaEdit was created by Maxim Iorsh in 2006. It is public
+domain. You can use it in any way and for any purpose.
+
+This script loads comments from text file which has the following line format:
+
+glyph_name:glyph_comment
+
+The script supports escape character '\': when '\n' is encountered in the
+comment, the newline character is put into the actual comment.
+
+This script was developed and tested with build 20061025.
+*/
+
+// Try to determine whether there is an active font
+if ($firstfont == "")
+    // No font is currently loaded
+    // Try to get font name from argument
+    if ($argc == 1)
+        Error("Exiting - no font provided!");
+    else
+        myFont = $1;	// font name = first argument
+    endif
+else
+    myFont = $curfont;	// font name = current active font
+endif
+
+// Try to open the font. If this is the current font (obtained from $curfont),
+// pfaedit will do nothing. If this is a file name obtained from command line,
+// a failure may occur due to incorrect font format or missing file. Such
+// failure will cause the script to abort.
+Open(myFont);
+
+comment_file = LoadStringFromFile("comments_dump.txt")
+
+while (Strlen(comment_file) > 0)
+    newline_idx = Strstr (comment_file, Chr(10));
+
+    // Cut the next line from the file string and trim the file string
+    // accordingly.
+    if (newline_idx >= 0)
+        comment_line = Strsub (comment_file, 0, newline_idx);
+        comment_file = Strsub (comment_file, newline_idx+1);
+    else
+        comment_line = comment_file;
+        comment_file = "";
+    endif;
+
+    delimiter_idx = Strstr (comment_line, ":");
+
+    if (delimiter_idx >= 0)
+        glyph_name = Strsub (comment_line, 0, delimiter_idx);
+        comment_line = Strsub (comment_line, delimiter_idx+1);
+
+        if (SelectIf (glyph_name) > 0)
+
+            // Glyph present in the font.
+            comment_conv = "";
+            len = Strlen (comment_line);
+            i = 0; while ( i < len )
+                if (Strsub (comment_line, i, i+1) == Chr(92))
+                    // Escape character '\' encountered.
+                    i = i+1;
+                    if (Strsub (comment_line, i, i+1) == "n")
+                        comment_conv = comment_conv + Chr(10);
+                    else
+                        comment_conv = comment_conv + Strsub (comment_line, i, i+1);
+                    endif;
+                else
+                    comment_conv = comment_conv + Strsub (comment_line, i, i+1);
+                endif;
+            i = i+1; endloop;
+
+            SetGlyphComment (comment_conv);
+        endif;
+    endif;
+endloop;
+
+/*****************************************************************
+* Fri Dec 22 2006 Maxim Iorsh <iorsh@math.technion.ac.il> 20061222
+- Created
+*****************************************************************/

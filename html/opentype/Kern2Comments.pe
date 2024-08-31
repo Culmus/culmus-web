@@ -1,0 +1,96 @@
+#!/usr/bin/fontforge
+
+/* This script for FontForge was created by Maxim Iorsh in 2005. It is public
+domain. You can use it in any way and for any purpose.
+
+This script automatically adds all the necessary Advanced Typography
+features to a font file. 
+
+Currently supported: 
+1. letter + dagesh ligatures
+2. sin-shin ligatures
+3. yiddish ligatures
+4. aleph-lamed and final-kaf with shva/qamats
+
+This script was developed and tested with build 20050117.
+Script version: 09 Feb 2005
+*/
+
+// Try to determine whether there is an active font
+if ($firstfont == "")
+	// No font is currently loaded
+	// Try to get font name from argument
+	if ($argc == 1)
+		Error("Exiting - no font provided!");
+	else
+		myFont = $1;	// font name = first argument
+	endif
+else
+	myFont = $curfont;	// font name = current active font
+endif
+
+// Try to open the font. If this is the current font (obtained from $curfont),
+// pfaedit will do nothing. If this is a file name obtained from command line,
+// a failure may occur due to incorrect font format or missing file. Such
+// failure will cause the script to abort.
+Open(myFont);
+
+// Load Hebrew classes data.
+"InitHebrewGlyphData.pe"();
+
+// For each consonant/vowel pair check whether it is a kerning pair and add an
+// appropriate comment to the consonant glyph.
+i = 0; while (i < SizeOf (_GlyphEquiv))
+ii = 0; while (ii < SizeOf (_GlyphEquiv[i]))
+
+    j = 0; while (j < SizeOf (_VowelEquiv))
+    jj = 1; while (jj < SizeOf (_VowelEquiv[j]))
+
+        if (SelectIf (_GlyphEquiv[i][ii]) > 0)
+            kern = -GlyphInfo("Kern", _VowelEquiv[j][jj]);
+
+            if (kern != 0)
+                // Add comment to the leading consonant.
+                comment = GlyphInfo("Comment");
+
+                replace_idx = Strstr (comment, "%" + _VowelEquiv[j][0]);
+                if (replace_idx >= 0)
+                    comment1 = Strsub (comment, 0, replace_idx);
+                    next_idx = Strstr (Strsub (comment, replace_idx), Chr(10));
+                    comment2 = Strsub (comment, replace_idx + next_idx + 1);
+                else
+                    comment1 = comment;
+                    comment2 = "";
+                endif;
+
+/*
+                PostNotice ("===");
+                PostNotice ("Searching: " + _VowelEquiv[j][0]);
+                PostNotice ("---");
+                PostNotice ("%" + _VowelEquiv[j][0] + "=");
+                PostNotice ("---");
+                PostNotice (comment1);
+                PostNotice ("---");
+                PostNotice (comment2);a
+*/
+
+                comment = comment1 + "%" + _VowelEquiv[j][0] + "=" + kern + Chr(10) + comment2;
+
+                SetGlyphComment(comment);
+
+                // Reset the kerning
+                SetKern (_VowelEquiv[j][jj], 0);
+            endif;
+
+        endif;
+
+    jj = jj + 1; endloop;
+    j = j + 1; endloop;
+
+ii = ii + 1; endloop;
+i = i + 1; endloop;
+
+/*****************************************************************
+* Fri Dec 22 2006 Maxim Iorsh <iorsh@math.technion.ac.il> 20061222
+- Created
+*****************************************************************/

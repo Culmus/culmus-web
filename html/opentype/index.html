@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>OpenType support for Hebrew fonts</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Maxim Iorsh">
+	<META NAME="CREATED" CONTENT="20061222;10083900">
+	<META NAME="CHANGED" CONTENT="20070106;21453700">
+	<STYLE>
+	<!--
+		H1 { color: #000000 }
+		P { color: #000000; text-align: justify }
+		H2 { color: #000000 }
+		PRE { color: #000000 }
+		A:link { color: #000099 }
+		A:visited { color: #551a8b }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" LINK="#000099" VLINK="#551a8b" BGCOLOR="#ddddff" DIR="LTR">
+<H1>OpenType support for Hebrew fonts</H1>
+<P>This page presents some FontForge scripts which I find useful in
+creating OpenType fonts. An example can be found at the end of the
+page.</P>
+<H2>Scripts</H2>
+<UL TYPE=SQUARE>
+	<LI><P><A HREF="AddHebrewGSUB.pe">AddHebrewGSUB.pe</A> – defines
+	standard substitutions and ligatures</P>
+	<LI><P><A HREF="AddHebrewGPOS.pe">AddHebrewGPOS.pe</A> – defines
+	positioning of diacritics based on information provided in the glyph
+	comments in a special format.</P>
+	<LI><P><A HREF="InitHebrewGlyphData.pe">InitHebrewGlyphData.pe</A> –
+	initializes static data for AddHebrewGPOS.pe.</P>
+	<LI><P><A HREF="DumpComments.pe">DumpComments.pe</A> – auxiliary
+	script which dumps comments from the glyph info to an external text
+	file.</P>
+	<LI><P><A HREF="LoadComments.pe">LoadComments.pe</A> – auxiliary
+	script which loads comments from an external file produced by
+	DumpComments.pe into a font.</P>
+	<LI><P><A HREF="Kern2Comments.pe">Kern2Comments.pe</A> – auxiliary
+	script which converts kerning data into anchor positioning data in
+	the glyph comments.</P>
+</UL>
+<H2>Glyph substitution</H2>
+<P>Hebrew typefaces may include several features for glyph
+substitution. These features can be created semi-automatically using
+the provided script AddHebrewGSUB.pe. The features include</P>
+<UL TYPE=SQUARE>
+	<LI><P><B><I>Dagesh</I> ligatures.</B> All consonant glyphs except
+	the final forms, followed by <I>dagesh</I> glyph, can be replaced
+	with an appropriate composite glyph.<BR><IMG SRC="beth-dagesh.png" NAME="Beth dagesh" ALIGN=BOTTOM WIDTH=254 HEIGHT=34 BORDER=0></P>
+	<LI><P><B><I>Shin</I> ligatures.</B> <I>Shin</I> glyph without <I>sin</I>
+	or <I>shin dot</I> can be followed by a separate <I>sin/shin dot</I>
+	glyph and possibly by <I>dagesh</I>. It will also be replaced by an
+	appropriate ligature.<BR><IMG SRC="shin-dot.png" NAME="Shin dot" ALIGN=BOTTOM WIDTH=263 HEIGHT=38 BORDER=0></P>
+	<LI><P><B>Yiddish ligatures.</B> Unicode specification includes
+	several letters which are present only in the Yiddish alphabet, such
+	as <I>pasekh tsvey yudn</I>, and these can replace the sequence of
+	solitary glyphs when appropriate. The script sets these ligatures to
+	be active only when the text is marked as an Yiddish language text
+	in a text editor (OpenType language tag “hebr{JII }”). This
+	feature is primarily of academic interest, as virtually no text
+	editors support OpenType with respect to language specification.<BR><IMG SRC="beth-rafe.png" NAME="Beth rafe" ALIGN=BOTTOM WIDTH=254 HEIGHT=37 BORDER=0></P>
+	<LI><P><B>Justification alternatives.</B> One can see in Torah
+	scrolls and printed editions, or in older newspapers, that line
+	justification is often achieved by replacing certain letters by
+	their wide counterparts. The script defines “jalt” substitution
+	feature to allow that. It seems that no software supports this
+	feature except Adobe InDesign.<BR><IMG SRC="wide-dalet.png" NAME="Justification alternative" ALIGN=BOTTOM WIDTH=192 HEIGHT=34 BORDER=0></P>
+	<LI><P><B>Miscellaneous ligatures and substitutions.</B></P>
+	<UL TYPE=SQUARE>
+		<LI><P><I>Final kaf</I> with <I>shwa</I> / <I>qamats</I>. The <I>final
+		kaf</I> is the only final form which may bear diacritics. The
+		diacritics are usually placed above the normal diacritics line,
+		almost in the middle of the glyph. In order to simplify the display
+		of these cases, some fonts may contain precomposed glyphs which
+		already include the <I>final kaf</I> with <I>shwa</I> and <I>qamats</I>.
+		In that case it is necessary to define these glyphs as ligatures.<BR><IMG SRC="final-kaf-qamatz.png" NAME="Final kaf-kamatz ligature" ALIGN=BOTTOM WIDTH=249 HEIGHT=46 BORDER=0></P>
+		<LI><P><I>Holam male</I>. In a similar manner, <I>vav</I> with
+		<I>holam</I> also comes precomposed in some fonts, and then it
+		should be defined as a ligature.<BR><IMG SRC="vav-holam.png" NAME="Vav-holam ligature" ALIGN=BOTTOM WIDTH=224 HEIGHT=40 BORDER=0></P>
+		<LI><P><I>Aleph-lamed</I>. In prayer books printed in Ladino with
+		Hebrew alphabet, <I>aleph</I> and <I>lamed</I> are replaced by a
+		special ligature. The script defines this ligature twice. Once it
+		is defined as a mandatory ligature for Ladino texts, in the similar
+		form as Yiddish ligatures are mandatory in Yiddish texts. The other
+		time it is defined as a discretionary ligature (“dlig”), so the
+		designer can choose to use it in Hebrew text at her discretion, to
+		achieve some sort of medieval spirit.<BR><IMG SRC="aleph-lamed.png" NAME="Aleph-lamed ligature" ALIGN=BOTTOM WIDTH=290 HEIGHT=44 BORDER=0></P>
+		<LI><P>Alternative plus. In books intended for religious audience
+		the plus sign is sometimes replaced with its alternative form,
+		which lacks the bottom stroke. The script defines this replacement
+		as a stylistic alternative (“salt”), to be used at the
+		designer's discretion. <BR><IMG SRC="plus.png" NAME="Alternative plus" ALIGN=BOTTOM WIDTH=181 HEIGHT=31 BORDER=0></P>
+		<LI><P><I>Ayin</I> without descender. In pointed texts a
+		diacritical mark under the letter <I>ayin</I> may interfere with
+		the descender, creating an esthetically unpleasant disturbance in
+		the normal text flow. For this purpose a contextual substitution
+		feature is introduced, which replaces regular <I>ayin</I> with <I>ayin</I>
+		without descender whenever it is followed by a lower point. Unlike
+		all other features, this is not automatic. As of December 2006,
+		Fontforge scripting doesn't support contextual substitutions, so
+		the script only defines an auxiliary “AAYN” feature tag, and
+		the user must perform some manual steps laid out inside the script
+		to complete the substitution feature. Besides that, the <I>ayin</I>
+		without descender is defined as a stylistic alternative (“salt”)
+		to <I>ayin</I>, for general usage.<BR><IMG SRC="ayin-qamats.png" NAME="Alternative ayin" ALIGN=BOTTOM WIDTH=248 HEIGHT=45 BORDER=0></P>
+	</UL>
+</UL>
+<H2>Diacritics positioning</H2>
+<P>The method I use for diacritics is somewhat idiosyncratic, but I
+find it convenient. I use FontForge metrics view (Window-&gt;New
+Metrics Window) to define a diacritical mark position in the form of
+a kerning pair between the basic glyph (consonant) and the mark
+(vowel). This view provides an immediate visual feedback, which
+greatly simplifies the task of the fine tuning. Then I run script
+Kern2Comments.pe which converts the kerning pair to a special form of
+comment stored in the appropriate basic glyph. Another script
+AddHebrewGPOS.pe converts these comments into final OpenType
+information.</P>
+<P>The most interesting script in this process is AddHebrewGPOS.pe,
+as it creates the actual OpenType anchors which set the positioning
+of <I>nikkud</I>. The positioning values for the script are stored in
+a special format inside glyph comments. For example, the glyph <I>lamed</I>
+may contain the following comment:</P>
+<PRE STYLE="margin-left: 0.79in">%DiaToBase1=200
+%DiaToBase2=220
+%DiaToBaseU=220
+%DiaToBaseO=-70</PRE><P>
+This comment can be translated as follows:</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.79in">The anchor DiaToBase1 for
+narrow diacritics (<I>hiriq</I>, <I>shwa</I>) shall be located at
+(200,0)<BR>The anchor DiaToBase2 for medium-width diacritics (<I>tsere</I>,
+<I>patah</I>, <I>qamats</I>, <I>segol</I>) shall be located at
+(220,0)<BR>The anchor DiaToBaseU for <I>qubutz</I> shall be located
+at (220, 0)<BR>The anchor DiaToBaseO for <I>holam haser</I> shall be
+located at (-70,0)</P>
+<P>First the script creates five anchor classes named
+DiaToBase[123UO]. In this list 1 stands for narrow marks, 2 stands
+for medium-width marks, 3 stands for <I>hataf</I> marks, U stands for
+<I>qubutz</I>, and O stands for <I>holam haser</I>. Then it traverses
+all vowels and sets on each vowel an anchor of the appropriate class.
+The vowel anchors are always set at (0,0).</P>
+<P>Furthermore, the script automatically traverses all consonants and
+parses their respective comments to create anchors as appropriate.
+The anchors set on consonants correspond to the anchors set on
+vowels, to produce OpenType marks positioning. Generally, each
+consonant bears an anchor for each class, thus having up to 5
+anchors. In practice, some anchors may be absent, e.g. only glottal
+consonants have anchor DiaToBase3 defined.</P>
+<P>The script supports the notion of glyph equivalence, e.g. comments
+stored for <I>lamed</I> are applied on <I>lamed dagesh</I> too, since
+these two glyphs should have similar diacritics positioning.</P>
+<P>An auxiliary script InitHebrewGlyphData.pe defines static arrays
+of vowels and consonants for use in AddHebrewGPOS.pe. It maintains
+consonant equivalence tables, describing glyphs which should be
+considered equivalent for the purpose of diacritics positioning. It
+also maintains vowel tables which describe anchor classes and marks
+corresponding to these classes.</P>
+<P>Another two auxiliary scripts DumpComments.pe and LoadComments.pe
+dump glyph comments to external file comments_dump.txt, and load them
+accordingly.</P>
+<H2>Example</H2>
+<P>The package below contains a sample source SFD file and the
+resulting OpenType font.</P>
+<P>In order to get the OpenType font from the source file, the
+following should be done:</P>
+<OL>
+	<LI><P>Download the scripts AddHebrewGSUB.pe,  AddHebrewGPOS.pe and 
+	InitHebrewGlyphData.pe.</P>
+	<LI><P>Open the file David-Medium.sfd in the FontForge.</P>
+	<LI><P>Run the script  AddHebrewGSUB.pe by choosing “File-&gt;Execute
+	script...”, “Call...” and selecting the script from the
+	download location.</P>
+	<LI><P>Perform manual instructions listed in the script.</P>
+	<LI><P>Run the script AddHebrewGPOS.pe.</P>
+	<LI><P>Export the font as OpenType by choosing “File-&gt;Generate
+	Fonts...”, type “OpenType (CFF)”, “Save”.</P>
+</OL>
+<P>The resulting file David-Medium.otf can be installed using your
+desktop's standard font installation procedure. Compare the results
+with the provided font to make sure everything went fine.</P>
+</BODY>
+</HTML>

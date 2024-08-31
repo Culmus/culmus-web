@@ -1,0 +1,34 @@
+@media screen, projection {
+    BODY.main { margin-right: 13em; background: #ddffdd; color: #000000; }
+    DIV.tmenu { position: fixed; background-color: #efffef; width: 12em; right: 0px; top: 0px; border-style: none; height: 100%; }
+}
+
+@media print {
+    IFRAME.menu { display: none; }
+}
+
+@media only screen and (max-device-width: 480px) {
+    BODY.main { margin-right: 0.5em; }
+    DIV.tmenu { position: static; background-color: transparent; }
+    DIV.nomobile {display:none;}
+}
+
+A:link { color: #009900 }
+A:visited { color: #558b1a }
+A:active { color: #33ff33 }
+
+P { text-align:justify; }
+
+DIV.quote { margin-left: 50%; font-style: italic }
+
+DIV.quoteauthor { margin-left: 50%; text-align: right; font-style: italic }
+
+TABLE.frm { border-collapse:collapse; margin-left: auto; margin-right: auto; }
+TABLE.frm TR { background-color: #ffffff; }
+TABLE.frm TR.alt { background-color: #f0fff0; }
+TABLE.frm TH { border: 1px solid #77cc77; padding:3px; background-color: #77cc77; }
+TABLE.frm TD { border: 1px solid #77cc77; padding:3px; vertical-align: top; }
+
+UL { list-style-type: square }
+
+LI { text-align: justify; margin-bottom: 1em }

@@ -1,0 +1,311 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Culmus Project - Font Creation Notes</title>
+  <LINK REL=StyleSheet HREF="culmus.css" TYPE="text/css">
+  <LINK REL=StyleSheet HREF="terwan.css" TYPE="text/css">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <meta name="author" content="Maxim Iorsh">
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+  <style type="text/css">
+<!--
+  DIV.item:before { content: counter(countera) ". ";}
+  DIV.item {font-weight: bold;counter-reset: counterb;counter-increment: countera;}
+  DIV.subitem:before { content: counter(countera) "." counter(counterb) " ";}
+  DIV.subitem {margin-left: 2em;counter-increment: counterb;}
+
+  H2:before { content: counter(counterc) ". ";}
+  H2 {font-weight: bold;counter-reset: counterd;counter-increment: counterc;}
+  H3:before { content: counter(counterc) "." counter(counterd) " ";}
+  H3 {counter-increment: counterd;}
+-->
+
+  </style>
+</head>
+<body class="main">
+<div class="tmenu"></div>
+<script  language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function() {
+	$('.tmenu').load('terwan.html');
+});
+</script>
+
+<h1>Notes on Font Creation</h1>
+<div class="item"><a href="#preamble">Preamble</a></div>
+<div class="item"><a href="#unicode">Hebrew as a part of Unicode
+Standard</a></div>
+<div class="subitem"><a href="#heb-basic">Basic Hebrew characters</a></div>
+<div class="subitem"><a href="#presform">Hebrew ligatures and
+special forms</a></div>
+<div class="subitem"><a href="#misc">Miscellaneous additions</a></div>
+<div class="item"><a href="#special">Special forms and
+typographical oddities</a></div>
+<div class="subitem"><a href="#biblical">Biblical typesetting</a></div>
+<div class="subitem"><a href="#lamed">Bowed lamed</a></div>
+<div class="item"><a href="#groups">Glyph groups</a></div>
+<div class="subitem"><a href="#basic">Basic set</a></div>
+<div class="subitem"><a href="#extended">Extended set</a></div>
+<div class="subitem"><a href="#biblical_forms">Biblical forms</a></div>
+<div class="subitem"><a href="#obsolete">Obsolete glyphs</a></div>
+<div class="subitem"><a href="#romanization">Hebrew romanization</a></div>
+<div class="item"><a href="#kerning">Kerning</a></div>
+<hr width="100%" size="2">
+<h2><a name="preamble"></a> Preamble </h2>
+<blockquote>
+  <p> This document doesn't pretend to be the written Torah for a font
+designer. It is just a compilation of many notes, both paper and
+electronic, which used to clutter my table and computer, and which
+would
+inevitably be lost, unless I organized them as a single document and
+put on the Web. The primary purpose of this document is to serve me.
+But since Culmus is an open-source project, and the notion of
+"source" for artistic items is quite obscure, I declare hereby
+this document to be a part of source. As such, it immediately
+attains the right to be published here. </p>
+</blockquote>
+<h2><a name="unicode"></a> Hebrew as a part of Unicode standard </h2>
+<blockquote>
+  <h3><a name="heb-basic"></a> Basic Hebrew characters - <a
+ href="http://www.unicode.org/charts/PDF/U0590.pdf">see chart</a> </h3>
+  <p>The Unicode standard reserves a range of 112 characters in
+0x0590-0x05FF. This range includes basic Hebrew letters with final
+forms, diacritics and cantillation marks (Tiberian system),
+special Hebrew punctuation (maqaf, sof-pasuk, geresh and
+gershayim) and Yiddish digraphs. Please note that complete Yiddish
+support also requires four vowels from Alphabetic Presentation
+Forms.</p>
+  <h3><a name="presform"></a> Hebrew ligatures and special forms
+- <a href="http://www.unicode.org/charts/PDF/UFB00.pdf">see chart</a> </h3>
+  <p>Another range of Unicode is called "Alphabetic Presentation
+Forms" and part of it (0xFB1D - 0xFB4F) is devoted to Hebrew
+ligatures and special forms. This includes all letters combined
+with dagesh, several Yiddish and Ladino ligatures, wide letters
+and special forms.</p>
+  <p> <b>Notes:</b> (1) Yiddish language requires the following
+vowels:
+0xFB1D, 0xFB1F, 0xFB2E, 0xFB2F.</p>
+  <p> (2) The only Ladino ligature included in Unicode is aleph-lamed
+(0xFB4F). Unlike this one, other common ligatures can be produced
+using the basic forms.</p>
+  <p> (3) The Unicode standard doesn't define the purpose of
+alternative
+ayin (0xFB20). In contrary to the official chart, I create an
+outline for this glyph such that it doesn't descend below the
+baseline. This form of the letter ayin can be utilized when you
+need to position a diacritical mark below it.</p>
+  <h3><a name="misc"></a> Miscellaneous additions </h3>
+  <p> A. A New Israeli Sheqel sign is defined at 0x20AA. </p>
+  <p> B. Microsoft specification defines five combinations (0xE801 -
+0xE805) in the Private Use Area, which include vav with holam
+haser, final kaf with shva and qamats, and lamed with holam
+haser with or without dagesh. All these combinations can be
+produced using OpenType rendering engine and therefore are not
+necessary, but for convenience I include final kaf with shva and
+qamats (0xE802 - 0xE803). </p>
+  <p> C. Microsoft also recommends to include the following characters:
+LTR (0x200E), RTL (0x200F) and dotted circle (0x25CC). Their reason is
+described at <a
+ href="https://docs.microsoft.com/en-us/typography/script-development/hebrew#handling-invalid-combining-marks">
+Handling Invalid Combining Marks</a> . </p>
+  <p> D. In the spirit of Microsoft recommendation, I also include the
+following characters: Zero Width Non-Joiner (0x200C) and Zero Width
+Joiner (0x200D). Their purpose is as follows: ZWJ may force
+ligation of aleph and lamed into aleph-lamed ligature, which would
+normally not occur. ZWNJ may prevent the same conversion when
+using "JUD " (Ladino) language tag which would otherwise force a
+ligation. Microsoft has opinion on this topic too: <a
+ href="https://docs.microsoft.com/en-us/typography/develop/otdevinfo#suggested-glyphs-for-complex-scripts">Suggested glyphs for complex scripts</a>. </p>
+  <p> E. Always make sure that your font includes character "zero"
+(0x0030), because presence of this character declares the font
+as ASCII-enabled. If your font is not marked as ASCII-enabled,
+most software will utilize only its Hebrew part, and substitute
+punctuation and digits from some other font. </p>
+</blockquote>
+<h2><a name="special"></a>Special forms and typographical oddities
+</h2>
+<blockquote>
+  <h3><a name="biblical"></a>Biblical typesetting</h3>
+  <p>The task of biblical typesetting, apart from the difficulty of
+proper diacritics positioning and a plenty of other problems, requires
+several very rare glyph forms. A very good explanation of some
+of them can be found at the site of <a
+ href="https://www.sofer.co.uk/">Mordechai Pinchas
+ Sofer</a>, in the section <a href="https://www.sofer.co.uk/oddities">"Scribal oddities"</a></p>
+  <p><span style="font-weight: bold;">Broken vav</span><br>
+Appears only once in the entire Bible (Numeri 25:12, in the
+word "shalom"). An explanation of its meaning can be found at <a
+ href="https://www.sofer.co.uk/broken-vav">Broken Vav</a>.</p>
+  <p><span style="font-weight: bold;">Reversed nun</span><br>
+Appears twice in the Bible (Numeri 10:35-36). An explanation
+can be found at <a
+ href="https://www.sofer.co.uk/sefer-binsoa">Inverted Nunim of Sefer Binsoa</a>.
+Note that the tradition doesn't define whether the letter should be
+reversed upside-down or right-to-left. In my edition of Bible,
+the nun is simply turned 180&#176;, probably because this way the
+typesetter could utilize a common glyph and avoid producing a
+special one. </p>
+</blockquote>
+<blockquote>
+  <h3><a name="lamed"></a>Bowed lamed</h3>
+  <p><object style="margin-right:1em; float:left; width:8em" type="image/svg+xml" data="lamed.svg"></object>Some designers argue that bowed lamed was introduced in order to squeeze more lines into a piece of paper in the times when paper was rare and expensive. For this reason, nowadays, bowed lamed makes the text look old-fashioned and sometimes is considered a bad typographic style. If you still wish to use it, please download "Frank Curled Lamed" from the <a href="developers.html">Developers' area</a>.
+</blockquote>
+<h2><a name="groups"></a>Glyph groups</h2>
+<blockquote>
+  <p>I decided to introduce my own grouping of glyphs, to help user
+easily find out which features are supported by each font.</p>
+  <h3><a name="basic"></a>Basic set</h3>
+  <ul>
+    <li>22 Hebrew letters + 5 final forms (U+05D0 - U+05EA)</li>
+    <li>Digits (U+0030 - U+0039)<p><object style="margin-right:1em; float:left; width:24em" type="image/svg+xml" data="oldstyle.svg"></object>I tend sometimes to design old style digits, which usually have descenders in 34579 and ascenders in 68. When the font has heavy horizontal elements (such as Frank-Ruehl and most classic ashkenazi-style fonts), designing a digit such as 5 can be challenging as its two horizontal strokes are too close to each other and produce excessively black glyph. In this case turning to the old style form can give better results.</li>
+    <li>Punctuation
+      <p>Basic: Exclamation mark (U+0021), double quote (U+0022), single quote (U+0027), comma (U+002C), hyphen (U+002D), period (U+002E), colon (U+003A), semicolon (U+003B), question mark (U+003F), ellipsis (U+2026).<br>
+      Hebrew: Geresh (U+05F3), gershayim (U+05F4).<br>
+      Dashes: En-dash (U+2013), em-dash (U+2014), direct speech dash (U+2015).<br>
+      Quotes: Left quote (U+2018), right quote (U+2019), single base quote (U+201A), left double quote (U+201C), right double quote (U+201D), double base quote (U+201E).
+      <p>In older books, which are mostly typeset with Drugulin, sometimes with Frank-Ruehl, double quotes and geresh/gershayim are usually aligned with the mean line of the letters. I deilberately choose to raise quotes considerably, as I want them to be distinctive and highly visible, just like any other punctuation. Geresh and gershayim are also raised, but to smaller extent. In their case one of my concerns is that in standalone counting geresh can be confused with "yod".
+</li>
+    <li>Parentheses<p>Ordinary parentheses (U+0028, U+0029), left and right brackets (U+005B, U+005D)</li>
+    <li>Mathematical symbols<p>Number sign (U+0023), percent sign (U+0025), asterisk (U+002A), plus (U+002B), slash and backslash (U+002F, U+005C), less, equal and greater signs (U+003C - U+003E),  minus (U+2212), alternative plus (U+FB29). <p><object style="margin-right:1em; float:left; width:6em" type="image/svg+xml" data="minus.svg"></object>People commonly use hyphen instead of minus, but hyphen is not really a minus, and hyphen is also significantly shorter. The minus has the same width and leads as the plus.</li> 
+    <li>Currency symbols<p>New shequel (U+20AA), dollar sign (U+0024), euro (U+20AC), pound (U+00A3). <p>The new shequel is naturally a must, and dollar and euro are frequently used in Hebrew internet sites too. Regarding pound, somebody once asked me for it, and I think it's nice.</li>
+  </ul>
+  <h3><a name="extended"></a>Extended set</h3>
+  <ul>
+    <li>Diacritics (nikud, shin and sin dots, dagesh, rafe and varika)</li>
+    <li>Precomposed forms with dagesh</li>
+    <li>Forms of sin/shin with dot and with/without dagesh</li>
+    <li>Yiddish and Ladino letters</li>
+    <li>Microsoft precomposed forms (0xE801-0xE803)</li>
+    <li>Misc symbols (NIS, zero-width spaces, dotted circle,
+alternative ayin and alternative plus)</li>
+  </ul>
+  <h3><a name="biblical_forms"></a>Biblical forms</h3>
+  <ul>
+    <li>Cantillation marks</li>
+    <li>Masoretic letterforms</li>
+  </ul>
+  <h3><a name="obsolete"></a>Obsolete glyphs</h3>
+  <ul>
+    <li>Wide forms</li>
+  </ul>
+  <h3><a name="romanization"></a>Hebrew romanization</h3>
+  <table class="frm" width="100%">
+    <thead>
+      <tr>
+        <th>Glyph</th>
+	<th>UTF-16 Encoding</th>
+	<th>Components</th>
+	<th>UTF-16 Encodings</th>
+	<th>Reference</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>&#x02BE;</td><td>U+02BE</td><td></td><td></td><td>ISO 259</td>
+      </tr>
+      <tr class="alt">
+        <td>&#x1E25;</td><td>U+1E25</td><td>h + &#x25CC;&#x0323;</td><td>U+0068 U+0323</td><td>ISO 259, <a href="https://opensiddur.org/contributing/style-guide/">Open Siddur</a></td>
+      </tr>
+      <tr>
+        <td>&#x1E6D;</td><td>U+1E6D</td><td>t + &#x25CC;&#x0323;</td><td>U+0074 U+0323</td><td>ISO 259, <a href="https://opensiddur.org/contributing/style-guide/">Open Siddur</a></td>
+      </tr>
+      <tr class="alt">
+        <td>&#x02BF;</td><td>U+02BF</td><td></td><td></td><td>ISO 259</td>
+      </tr>
+      <tr>
+        <td>&#x1E63;</td><td>U+1E63</td><td>s + &#x25CC;&#x0323;</td><td>U+0073 U+0323</td><td>ISO 259</td>
+      </tr>
+      <tr class="alt">
+        <td>s&#x0300;</td><td></td><td>s + &#x25CC;&#x0300;</td><td>U+0073 U+0300</td><td>ISO 259</td>
+      </tr>
+      <tr>
+        <td>&#x015B;</td><td>U+015B</td><td>s + &#x25CC;&#x0301;</td><td>U+0073 U+0301</td><td>ISO 259</td>
+      </tr>
+      <tr class="alt">
+        <td>&#x0161;</td><td>U+0161</td><td>s + &#x25CC;&#x030C;</td><td>U+0073 U+030C</td><td>ISO 259</td>
+      </tr>
+      <tr>
+        <td>&#x00E5;</td><td>U+00E5</td><td>&#x0061; + &#x25CC;&#x030A;</td><td>U+0061 U+030A</td><td>ISO 259</td>
+      </tr>
+      <tr class="alt">
+        <td>&#x0229;</td><td>U+0229</td><td>&#x0065; + &#x25CC;&#x0327;</td><td>U+0065 U+0327</td><td>ISO 259</td>
+      </tr>
+      <tr>
+        <td>&#x0175;</td><td>U+0175</td><td>&#x0077; + &#x25CC;&#x0302;</td><td>U+0077 U+0302</td><td>ISO 259</td>
+      </tr>
+      <tr class="alt">
+        <td>&#x1E87;</td><td>U+1E87</td><td>&#x0077; + &#x25CC;&#x0307;</td><td>U+0077 U+0307</td><td>ISO 259</td>
+      </tr>
+      <tr>
+        <td>&#x00B0;</td><td>U+00B0</td><td></td><td></td><td>ISO 259</td>
+      </tr>
+      <tr class="alt">
+        <td>&#x0103;</td><td>U+0103</td><td>&#x0061; + &#x25CC;&#x0306;</td><td>U+0061 U+0306</td><td>ISO 259</td>
+      </tr>
+      <tr>
+        <td>&#x014F;</td><td>U+014F</td><td>&#x006F; + &#x25CC;&#x0306;</td><td>U+006F U+0306</td><td>ISO 259</td>
+      </tr>
+      <tr class="alt">
+        <td>&#x1E1D;</td><td>U+1E1D</td><td>&#x0065; + &#x25CC;&#x0327; + &#x25CC;&#x0306;</td><td>U+0065 U+0327 U+0306</td><td>ISO 259</td>
+      </tr>
+      <tr>
+        <td>&#x1E03;</td><td>U+1E03</td><td>&#x0062; + &#x25CC;&#x0307;</td><td>U+0062 U+0307</td><td>ISO 259-2</td>
+      </tr>
+      <tr class="alt">
+        <td>&#x1E23;</td><td>U+1E23</td><td>&#x0068; + &#x25CC;&#x0307;</td><td>U+0068 U+0307</td><td>ISO 259-2</td>
+      </tr>
+      <tr>
+        <td>k&#x0307;</td><td></td><td>&#x006B; + &#x25CC;&#x0307;</td><td>U+006B U+0307</td><td>ISO 259-2</td>
+      </tr>
+      <tr class="alt">
+        <td>&#x1E57;</td><td>U+1E57</td><td>&#x0070; + &#x25CC;&#x0307;</td><td>U+0070 U+0307</td><td>ISO 259-2</td>
+      </tr>
+      <tr>
+	<td>&#x00E2;</td><td>U+00E2</td><td>&#x0061; + &#x25CC;&#x0302;</td><td>U+0061 U+0302</td><td><a href="https://opensiddur.org/contributing/style-guide/">Open Siddur</a></td>
+      </tr>
+      <tr class="alt">
+	<td>&#x014D;</td><td>U+014D</td><td>&#x006F; + &#x25CC;&#x0304;</td><td>U+006F U+0304</td><td><a href="https://opensiddur.org/contributing/style-guide/">Open Siddur</a></td>
+      </tr>
+      <tr>
+	<td>&#x00E9;</td><td>U+00E9</td><td>&#x0065; + &#x25CC;&#x0301;</td><td>U+0065 U+0301</td><td><a href="https://opensiddur.org/contributing/style-guide/">Open Siddur</a></td>
+      </tr>
+      <tr class="alt">
+	<td>&#x0259;</td><td>U+0259</td><td></td><td></td><td><a href="https://opensiddur.org/contributing/style-guide/">Open Siddur</a></td>
+      </tr>
+      <tr>
+	<td>&#x016B;</td><td>U+016B</td><td>&#x0075; + &#x25CC;&#x0304;</td><td>U+0075 U+0304</td><td><a href="https://opensiddur.org/contributing/style-guide/">Open Siddur</a></td>
+      </tr>
+      <tr class="alt">
+        <td>b&#x0331;</td><td></td><td>&#x0062; + &#x25CC;&#x0331;</td><td>U+0062 U+0331</td><td><a href="https://opensiddur.org/contributing/style-guide/">Open Siddur</a></td>
+      </tr>
+      <tr>
+        <td>&#x014B;</td><td>U+014B</td><td></td><td></td><td><a href="https://opensiddur.org/contributing/style-guide/">Open Siddur</a></td>
+      </tr>
+      <tr class="alt">
+        <td>&#x1E33;</td><td>U+1E33</td><td>&#x006B; + &#x25CC;&#x0323;</td><td>U+006B U+0323</td><td><a href="https://opensiddur.org/contributing/style-guide/">Open Siddur</a></td>
+      </tr>
+      </tbody>
+  </table>
+</blockquote>
+<h2><a name="kerning"></a>Kerning</h2>
+<blockquote>
+  <p>Some people say that Hebrew fonts don't need kerning. Indeed,
+non-kerned Hebrew fonts are quite bearable. But nevertheless, kerning
+would never hurt, even considering that software rarely supports it. I
+will not present the list of most recommended kerning pairs, these
+could significantly vary according to style. If you want an example,
+take a newspaper and look for the letters "&#1497;&#1489;" or "&#1497;&#1490;" in a headline
+set in
+Haim.</p>
+  <p>Now to the work...<br>
+First you will need a couple of pages of random garbage. I created a
+Perl script <a href="devel/heblorem.pl">heblorem.pl</a>, which outputs
+such garbage in iso-8859-8 encoding. The special feature of this script
+is that its output contains <i>every</i> possible combination of
+adjacent letters, so no pair will be possibly missed. Now load the
+garbage into some program which supports kerned fonts (or doesn't, but
+just for the first pass), print it with a good laser printer, and start
+sqeezing your eyes. The rest is obvious.</p>
+</blockquote>
+</body>
+</html>

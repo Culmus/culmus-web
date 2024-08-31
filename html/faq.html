@@ -1,0 +1,384 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Culmus Project - Frequently Asked Questions</title>
+  <LINK REL=StyleSheet HREF="culmus.css" TYPE="text/css">
+  <LINK REL=StyleSheet HREF="terwan.css" TYPE="text/css">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="author" content="Maxim Iorsh">
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+ <style type="text/css">
+
+<!--
+  DIV.item:before { content: counter(countera) ". ";}
+  DIV.item {font-weight: bold;counter-reset: counterb;counter-increment: countera;}
+  DIV.subitem:before { content: counter(countera) "." counter(counterb) " ";}
+  DIV.subitem {margin-left: 2em;counter-increment: counterb;}
+
+  H2:before { content: counter(counterc) ". ";}
+  H2 {font-weight: bold;counter-reset: counterd;counter-increment: counterc;}
+  H3:before { content: counter(counterc) "." counter(counterd) " ";}
+  H3 {counter-increment: counterd;}
+
+  LI {margin-top: 1ex;}
+-->
+
+  </style>
+</head>
+<body class="main">
+<div class="tmenu"></div>
+<script  language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function() {
+	$('.tmenu').load('terwan.html');
+});
+</script>
+<h1>Frequently Asked Questions</h1>
+<div class="item"><a href="#inst">Installation</a></div>
+<div class="subitem"><a href="#autoinst">Automatic Installation</a></div>
+<div class="subitem"><a href="#insttype">Determine Installation
+Type</a></div>
+<div class="subitem"><a href="#instfs">Installation for Font Server</a></div>
+<div class="subitem"><a href="#instxs">Installation for X Server</a></div>
+<div class="subitem"><a href="#instuser">Personal Installation</a></div>
+<div class="subitem"><a href="#instfc">Registration with FontConfig</a></div>
+<div class="subitem"><a href="#testinst">Testing Your Installation</a></div>
+<div class="item"><a href="#aa">Antialiasing</a></div>
+<div class="subitem"><a href="#aa-root">Global Antialiasing Support</a></div>
+<div class="subitem"><a href="#aa-user">User-level Antialiasing
+Support</a></div>
+<div class="subitem"><a href="#aa-sub">Sub-pixel Antialiasing</a></div>
+<!--
+<div class="item">3. <a href="#nikud">Typing Hebrew with Nikud</a></div>
+<div class="subitem">3.1 <a href="#nikudCommon">Common setup</a></div>
+<div class="subitem">3.2 <a href="#nikudXFree">XFree86 setup</a></div>
+<div class="subitem">3.3 <a href="#nikudKDE">KDE setup</a></div>
+-->
+<div class="item"><a href="#programs">Using Culmus fonts with
+various programs</a></div>
+<div class="subitem"><a href="#a2ps">a2ps</a></div>
+<div class="subitem"><a href="#a2ps_fedora35">a2ps with Fedora 35</a></div>
+<div class="subitem"><a href="#enscript">Enscript</a></div>
+<div class="subitem"><a href="#indesign">Adobe InDesign</a></div>
+<div class="subitem"><a href="#tex"><span class="texhtml" style="font-family: 'CMU Serif', cmr10, LMRoman10-Regular, 'Times New Roman', 'Nimbus Roman No9 L', Times, serif;">T<span style="text-transform: uppercase; vertical-align: -0.5ex; margin-left: -0.1667em; margin-right: -0.125em;">e</span>X</span> / <span class="texhtml" style="font-family: 'CMU Serif', cmr10, LMRoman10-Regular, 'Times New Roman', 'Nimbus Roman No9 L', Times, serif;">L<span style="text-transform: uppercase; font-size: 70%; margin-left: -0.36em; vertical-align: 0.3em; line-height: 0; margin-right: -0.15em;">a</span>T<span style="text-transform: uppercase; margin-left: -0.1667em; vertical-align: -0.5ex; line-height: 0; margin-right: -0.125em;">e</span>X</span> environments</a></div>
+<div class="item"><a href="#other">Other issues</a></div>
+<div class="subitem"><a href="#nottf">Can I get a TrueType version
+of fonts?</a></div>
+<div class="subitem"><a href="#fcwarn">Fontconfig produces multiple warnings</a></div>
+<div class="subitem"><a href="#lamed">Is there a bowed lamed in your fonts?</a></div>
+<hr width="100%" size="2">
+
+
+<h2><a name="inst"></a> Installation</h2>
+<blockquote>
+  <h3><a name="autoinst"></a>Automatic Installation</h3>
+  <p>If your system supports RPM (like Red Hat), than you can simply
+download an .rpm file and install it as root with</p>
+  <p><b><tt>rpm -U culmus-fonts-0.8-2.noarch.rpm</tt></b></p>
+  <p>(substitute the correct version instead).</p>
+  <p>Automatic installation packages for Debian, FreeBSD and Gentoo are
+available at the <a href="download.html">download page</a>.</p>
+  <p>In case your system doesn't support any of the above, or the
+installation failed for some reason, you will need to install fonts
+manually. The following procedure covers only Linux, not Unix, even
+though procedure for Unix shall be similar.</p>
+</blockquote>
+<blockquote>
+  <h3><a name="insttype"></a>Determine Installation Type</h3>
+  <p>X Windows server can obtain fonts from several various sources.
+Run from command line</p>
+  <p><b><tt>xset q</tt></b></p>
+  <p>and locate in the output section named "<tt>Font path</tt>". In
+the list of comma-separated entries try to locate the one which says '<tt>unix/:7100</tt>
+' (number may vary). If it is present, it is recommended that you
+install fonts for use with your font server (see section "<a href="#fs">Installation
+for Font Server</a> " - requires root access). Otherwise you may
+install
+the fonts either system-wide (see section "<a href="#xs">Installation
+for X Server</a> " - requires root access) or for your own use (see
+section " <a href="#pi">Personal Installation</a> " - doesn't require
+root access).</p>
+  <p>If your computer is a part of large network, it may happen that
+you will see an entry like '<tt>tcp/fsrv.mycompany.com:7100</tt>'
+(machine name and port may vary). This means that you are using an
+external font server, and in this case you may wish to ask network
+manager to install the fonts at that machine, to make them available to
+all users.</p>
+  <p>In addition to the above, don't forget to register the new fonts
+with fontconfig (see section "<a href="#instfc">Registration with
+FontConfig</a>"), if your system supports it.</p>
+</blockquote>
+<blockquote>
+  <h3><a name="instfs"></a>Installation for Font Server</h3>
+  <p><i>All the following actions should be carried out from the root
+shell.</i></p>
+  <p>Assuming you have downloaded a file <tt>culmus-0.71.tar.gz</tt>
+or
+later version, run:</p>
+  <p><b><tt>mkdir -p /usr/share/fonts/he <br>
+tar -zx --directory /usr/share/fonts/he --file culmus-0.71.tar.gz</tt></b></p>
+  <p>This will create a directory <tt>/usr/share/fonts/he/culmus-0.71</tt>
+with all <tt>.pfa</tt> and <tt>.afm</tt> files in it.</p>
+  <p>Locate the configuration file for your font server. It is usually <tt>/usr/X11R6/lib/X11/fs/config</tt>,
+but you can issue '<tt>man xfs</tt> ' to determine the correct
+location.
+Now open the configuration file and locate the section which starts
+with
+'<tt>catalogue =</tt> ' and contains a list of directories. Add the
+directory <tt>/usr/share/fonts/he/culmus-0.71</tt> to the end of the
+list, after comma.</p>
+  <p>Restart font server by issuing either</p>
+  <p><b><tt>/etc/init.d/xfs restart</tt></b></p>
+  <p>or</p>
+  <p><b><tt>/sbin/service xfs restart</tt></b></p>
+  <p>Now the fonts should be available; proceed to section " <a
+ href="#ti">Testing your installation</a> ".</p>
+  <h3><a name="instxs"></a> Installation for X Server</h3>
+  <p><i>All the following actions should be carried out from the root
+shell.</i></p>
+  <p>Assuming you have downloaded a file <tt>culmus-0.71.tar.gz</tt>
+or
+later version, run:</p>
+  <p><b><tt>mkdir -p /usr/share/fonts/he <br>
+tar -zx --directory /usr/share/fonts/he --file culmus-0.71.tar.gz</tt></b></p>
+  <p>This will create a directory <tt>/usr/share/fonts/he/culmus-0.71</tt>
+with all <tt>.pfa</tt> and <tt>.afm</tt> files in it.</p>
+  <p>Locate the configuration file for your X server. It is usually <tt>/etc/X11/XF86Config</tt> or <tt>/etc/X11/xorg.conf</tt>,
+but you can issue '<tt>man XF86Config</tt>' to see the list of possible
+alternative locations. Now open the configuration file and locate the
+line which starts with '<tt>FontPath</tt>' and contains a
+comma-separated list of directories. Add the directory <tt>/usr/share/fonts/he/culmus-0.71</tt>
+to the end of the list, after comma.</p>
+  <p>Restart X server by either logging out, or restarting your
+computer if needed. <br>
+Now the fonts should be available; proceed to section "<a href="#ti">Testing
+your installation</a> ".</p>
+  <h3><a name="instuser"></a> Personal Installation</h3>
+  <p>Assuming you have downloaded a file <tt>culmus-0.71.tar.gz</tt>
+or
+later version, run:</p>
+  <p><b><tt>tar -zx --directory ~ --file culmus-0.71.tar.gz</tt></b></p>
+  <p>This will create a subdirectory <tt>culmus-0.71</tt> in your home
+directory with all <tt>.pfa</tt> and <tt>.afm</tt> files in it.</p>
+  <p>Make the fonts available to your X server by issuing</p>
+  <p><b><tt>xset +fp $HOME/culmus-0.71 <br>
+xset fp rehash <br>
+  </tt></b></p>
+  <p>Now the fonts should be available; proceed to section " <a
+ href="#ti">Testing your installation</a> ". <br>
+You may wish to add these commands to your <tt>~/.xsession</tt> file,
+in order to avoid typing them every time you start an X session.</p>
+  <h3><a name="instfc"></a>Registration with FontConfig</h3>
+  <p>FontConfig is a new font configuration tool, therefore it is only
+available in newer distributions (such as RedHat 8.x). If you are not
+sure, whether you have it, try to run '<tt>fc-cache</tt>', and if you
+get a '<tt>Command not found</tt>' error - you probably don't have it.
+As far as I know, Gnome 2.x and Abiword 1.x need it. KDE doesn't.</p>
+  <p>If you were installing the fonts as root, make sure they are
+located under <tt>/usr/share/fonts</tt>, and run '<tt>fc-cache</tt>'
+as
+root. That's all.</p>
+  <p>If you were installing the fonts as an ordinary user, create a
+link <tt>.fonts</tt> from your home directory to your Culmus fonts
+directory:</p>
+  <p><b><tt>ln -s $HOME/culmus-0.71 .fonts</tt></b></p>
+  <p>or, if you already have <tt>.fonts</tt>, create inside it a link
+to your Culmus fonts directory:</p>
+  <p><b><tt>cd .fonts <br>
+ln -s $HOME/culmus-0.71</tt></b></p>
+Run '<tt>fc-cache</tt>', and you are done. <br>
+  <h3><a name="testinst"></a> Testing Your Installation</h3>
+A. Run '<tt>xlsfonts | grep culmus</tt>'. This command shall list all
+Culmus fonts. <br>
+B. If you have fontconfig, run '<tt>fc-list David</tt>', and this will
+show you three entries (Bold, Medium and Medium Italic). <br>
+C. Run any Hebrew-enabled application, such as Mozilla or KWord and
+test whether they display Hebrew correctly.</blockquote>
+<h2><a name="aa"></a> Antialiasing</h2>
+<blockquote>The following instructions assume that you already have
+antialiasing enabled for your desktop, and want Culmus fonts to be
+antialiased too. In case you don't have antialiasing at all, please
+read <a href="http://jmason.org/howto/subpixel.html">this</a> and <a
+ href="https://wiki.archlinux.org/title/font_configuration#Subpixel_rendering">this</a>
+before
+proceeding any further. <br>
+Like the installation, antialiasing support is enabled differently by
+root and non-root. <br>
+  <p>Recent version of KDE and Gnome allow to configure the
+antialiasing through the control panel, but since it's a rather new
+feature, some things are not covered or done wrong. I recommend to use
+the manual procedure described below.</p>
+</blockquote>
+<blockquote>
+  <h3><a name="aa-root"></a> Global Antialiasing Support</h3>
+  <p><i>All the following actions should be carried out from the root
+shell. <br>
+  </i></p>
+  <p>Open the file <tt>/etc/X11/XftConfig</tt> (some systems put it at
+  <tt>/usr/X11R6/lib/X11/XftConfig</tt>)
+and add to it the following line:</p>
+  <p><tt>dir "</tt><tt>/usr/share/fonts/he/culmus-0.71"</tt></p>
+  <p>assuming that was your installation directory for the fonts.</p>
+  <h3><a name="aa-user"></a> User-level Antialiasing Support</h3>
+Check whether your system allows user-level antialiasing support: open
+the file <tt>/etc/X11/XftConfig</tt>, and look for the line <br>
+  <p><tt>includeif "~/.xftconfig"</tt></p>
+If it is missing or commented out - too bad for you. Otherwise just add
+the following line: <br>
+  <p><tt>dir "~</tt><tt>/culmus-0.71"</tt></p>
+  <p>to the file <tt>.xftconfig</tt> in you home directory, assuming
+you installed the fonts in <tt>~</tt><tt>/culmus-0.71</tt>.</p>
+  <p><b>Remark:</b> KDE font installer tends to rewrite this file, so
+you need either to use the installer to install the fonts, or restore
+the aforementioned line each time it is overwritten.</p>
+  <h3><a name="aa-sub"></a>Sub-pixel Antialiasing</h3>
+  <p>If you have a laptop or an LCD screen, it is just essential that
+you enable sub-pixel antialiasing. Believe me, it's a whole new world!
+To make it work you only need to add the following line</p>
+  <p><tt>match edit rgba = rgb;</tt></p>
+  <p>to either of <tt>/etc/X11/XftConfig</tt> or <tt>~/.xftconfig</tt>
+(see sections 2.1 and 2.2 for reference). Some laptops require the
+parameter to be <tt>bgr</tt> and not <tt>rgb</tt>. The <a
+ href="http://grc.com/ctwhat.htm" target="_blank">following page</a>
+will help you to determine the correct value (look at the figure in the
+section "A Smooth Feast for Our Eyes ").</p>
+</blockquote>
+<!--
+<h2>3. <a name="nikud"></a> Typing Hebrew with Nikud</h2>
+<blockquote>
+  <p>There are many ways to cause diacritical marks (nikud) to show up
+in your favorite word processor. The simplest solution could be running
+a Unix equivalent of 'charmap' (e. g. KCharSelect in KDE) and composing
+the required word with mouse. Many will find this procedure
+frustrating,
+so the correct solution for them would be to cause the keyboard emit
+diacritics whenever it is asked for. The purpose of this section is to
+make your keyboard behave in such a way.</p>
+  <p>We will see how to create a custom keyboard layout which will
+include diacritics according to the <a
+ href="http://www.qsm.co.il/NewHebrew/Key1452e.htm" target="_blank">Israeli
+Standard SI 1452</a>.</p>
+  <ul>
+    <li> <i><a href="si1452.html">Click here</a> to see the keyboard
+layout for
+SI 1452</i><br>
+    </li>
+  </ul>
+  <h3>3.0 <a name="nikudCommon"></a> Common setup<br>
+  </h3>
+  <p><i>All the following actions should be carried out from the root
+shell. <br>
+  </i></p>
+Download the file <a href="devel/il_si1452"><tt>il_si1452</tt></a> and
+copy it to the directory <tt>/usr/X11R6/lib/X11/xkb/symbols</tt> and
+to the directory <tt>/usr/X11R6/lib/X11/xkb/symbols/pc</tt>.<br>
+  <p>Open the file <tt>/usr/X11R6/lib/X11/xkb/rules/xfree86.lst</tt>,
+locate the line "<tt>il Israeli</tt>" and add the following line after
+it:<br>
+  </p>
+  <p><tt> il_si1452 Israeli SI-1452</tt></p>
+  <h3>3.1 <a name="nikudXFree"></a>XFree86 setup</h3>
+  <p>Now you can apply the <i>SI 1452</i> layout by running from the
+command line (as an ordinary user):<br>
+  </p>
+  <p><b><tt>setxkbmap -layout "us,il_si1452" -option
+"grp:alt_shift_toggle,grp_led:scroll"</tt></b></p>
+  <p>or alternatively by editing the file <tt>/etc/X11/XF86Config</tt>
+(as the root) and changing the lines</p>
+  <p><tt>&nbsp;&nbsp;&nbsp; Option&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+"XkbOptions" ...<br>
+&nbsp;&nbsp;&nbsp; Option&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+"XkbLayout" ...<br>
+  </tt></p>
+  <p>into</p>
+  <p><tt>&nbsp;&nbsp;&nbsp; Option&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+"XkbOptions" "grp:switch,grp:alt_shift_toggle,grp_led:scroll"<br>
+&nbsp;&nbsp;&nbsp; Option&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+"XkbLayout" "us,il_si1452"<br>
+  </tt></p>
+  <p>Now you should be able to switch between the latin and the hebrew
+keyboards with Alt-Shift, like in Windows.<br>
+  <font color="#6666cc"><i>This method has been kindly proposed by
+Yaacov Zamir.</i></font></p>
+  <h3>3.2 <a name="nikudKDE"></a>KDE setup</h3>
+  <p>After you have performed the common setup, you can simply open
+keyboard control module and in the
+list of additional layouts select "Israeli SI-1452" instead of
+"Israeli". The keyboard should behave now as explained above.<br>
+  </p>
+</blockquote>
+-->
+<h2><a name="programs"></a>Using Culmus fonts with various programs</h2>
+<blockquote>
+  <h3><a name="a2ps"></a>a2ps</h3>
+  <p>You will need a Hebrew plain text file in visual iso8859-8
+encoding.
+You can use some combination of <tt>iconv</tt> and <tt>fribidi</tt>
+to get it from whatever you have.</p>
+  <p>a. Download the file <tt><a href="devel/iso8.edf">iso8.edf</a></tt>
+and put it into <tt>/usr/share/a2ps/encoding</tt>. Add the following
+line to <tt>/usr/share/a2ps/encoding/encoding.map</tt>:</p>
+  <p><tt>iso8 iso8</tt></p>
+  <p>b. Add the line</p>
+  <p><tt>AppendLibraryPath: /usr/share/fonts/he/Type1/</tt></p>
+  <p>to the file <tt>/etc/a2ps-site.cfg</tt> (assuming that is the
+directory where your Culmus fonts are installed).</p>
+  <p>c. Now you can run a2ps as follows:</p>
+  <p><b><tt>a2ps -X iso8 -o output.ps input.txt</tt></b></p>
+  <p><font color="#6666cc"><i>This solution is by courtesy of Tzafrir
+Cohen and Oded Resnik.</i></font></p>
+  <h3><a name="a2ps_fedora35"></a>a2ps with Fedora 35</h3>
+  <p>Fedora 35 introduced the version 0.133 of Culmus fonts which contains several new TrueType fonts (TTF) and discards legacy Type1 fonts (AFM). <tt>a2ps</tt> doesn't support TrueType fonts, so in order to keep using <tt>a2ps</tt> the user needs to downgrade some Culmus fonts to version 0.130.</p>
+  <p>Steps to install Culmus 0.130:</p>
+  <ol>
+    <li >On a Fedora 33 machine execute:<br>
+        <tt>dnf download culmus*</tt></li>
+    <li>Copy files <tt>culmus-fonts-common-0.130-17.fc33.noarch.rpm, culmus-nachlieli-clm-fonts-0.130-17.fc33.noarch.rpm, culmus-miriam-clm-fonts-0.130-17.fc33.noarch.rpm, culmus-miriam-mono-clm-fonts-0.130-17.fc33.noarch.rpm</tt> to a Fedora 35 machine.</li>
+    <li>On a Fedora 35 machine execute (in this order):<br>
+	    <tt>dnf install ./culmus-fonts-common-0.130-17.fc33.noarch.rpm</tt><br>
+	    <tt>dnf install ./&lt;file name&gt;</tt> for the rest of files</li>
+  </ol>
+  <p><font color="#6666cc"><i>This solution is by courtesy of Adi Keren.</i></font></p>
+  <h3><a name="enscript"></a>Enscript</h3>
+Like a2ps, enscript also needs input in visual iso8859-8 encoding. I
+would recommend to use a2ps, because it doesn't require a separate set
+of fonts.<br>
+  <p>a. Get the <a
+ href="http://prdownloads.sourceforge.net/culmus/culmus-0.7.non-linux.tgz?download">"non-linux"
+package</a> of Culmus fonts and extract it to the home directory. The
+fonts will actually reside in <tt>~/culmus-ux</tt>. Run '<tt>mkafmmap
+*.afm</tt>' in that directory and ignore the errors.</p>
+  <p>b. Add the line</p>
+  <p><tt>AFMPath: /home/myusername/culmus-ux</tt></p>
+  <p>to the file <tt>~/.enscriptrc</tt>. Unfortunately enscript
+understands neither ~ nor $HOME, so you will have to specify the
+explicit path to the fonts.</p>
+  <p>c. Now you can run enscript as follows:</p>
+  <p><b><tt>enscript -X ps -f Hasida-Medium10 -p output.ps input.txt</tt></b></p>
+  <p>The font size (10 in this example) can be varied for your
+convenience. The size 11 is the best for the default fribidi wrapping
+of 80 chars per line. You can use alternatively "Hasida-Bold" to get
+bold font.<br>
+  </p>
+  <h3><a name="indesign"></a>Adobe InDesign</h3>
+  <p>Sometimes Culmus fonts may break to the extent that InDesign fails to properly display diacritics positions or apply other OpenType features. In this case you should purge the "Document fonts" subfolder of your InDesign job.</p>
+  <h3><a name="tex"></a><span class="texhtml" style="font-family: 'CMU Serif', cmr10, LMRoman10-Regular, 'Times New Roman', 'Nimbus Roman No9 L', Times, serif;">T<span style="text-transform: uppercase; vertical-align: -0.5ex; margin-left: -0.1667em; margin-right: -0.125em;">e</span>X</span> / <span class="texhtml" style="font-family: 'CMU Serif', cmr10, LMRoman10-Regular, 'Times New Roman', 'Nimbus Roman No9 L', Times, serif;">L<span style="text-transform: uppercase; font-size: 70%; margin-left: -0.36em; vertical-align: 0.3em; line-height: 0; margin-right: -0.15em;">a</span>T<span style="text-transform: uppercase; margin-left: -0.1667em; vertical-align: -0.5ex; line-height: 0; margin-right: -0.125em;">e</span>X</span> environments</h3>
+  <p>There are several TeX environments which feature native support of Culmus fonts, among them <a href="http://ivritex.sourceforge.net/" target="_top">IvriTeX</a> for Linux, <a href="http://www.ma.huji.ac.il/~sameti/tex/culmusmiktex.html" target="_top">MikTeX</a> for Windows. Questions about Hebrew in TeX can be asked at the <a href="https://m.facebook.com/groups/973400199338661" target="_top">Hebrew TeX Facebook group</a>.</p>
+</blockquote>
+<h2><a name="other"></a> Other Issues</h2>
+<blockquote>
+  <h3><a name="nottf"></a>Can I get a TrueType version of fonts?</h3>
+  <p>Some fonts (specifically these with nikud support) are provided in the TrueType format, others are not. The easiest way to obatin the TrueType version of a font you like is to use the <a href="http://files-conversion.com/font-converter.php" target="_top">online conversion tool</a> <font color="#6666cc"><i>(link courtesy of Dotan Mazor)</i></font>.</p>
+  <h3><a name="fcwarn"></a>Fontconfig produces multiple warnings</h3>
+  <p>Fontconfig 2.10 and above produces a handful of warning of a sort</p>
+  <p><tt>Fontconfig warning: "/etc/fonts/conf.d/65-culmus.conf", line 12: Having multiple values in &lt;test&gt; isn't supported and may not works as expected</tt></p>
+  <p>This issue is thoroughly discussed at <a href="http://cgit.freedesktop.org/fontconfig/commit/?id=2837c63876b9b1f27d74aad51d45fc18d48f4652" target="_top">[1]</a> and <a href="https://launchpad.net/bugs/1034928" target="_top">[2]</a>. As far as I understand, this warning is purely cosmetical, and it doesn't reflect any change in existing functionality. Since <tt>culmus.conf</tt> used to work with earlier versions of fontconfig, I'm not going to fix it, unless there is some functional regression.</p>
+  <h3><a name="lamed"></a>Is there a bowed lamed in your fonts?</h3>
+  <p>Presently, bowed lamed is not formally supported in any of our fonts. It is available in "Frank Curled Lamed" font at the <a href="developers.html">Developers' area</a>. Please see also a <a href="notes.html#lamed">design note</a> on this issue.</p>
+</blockquote>
+If you have any other question, please contact <a
+ href="mailto:iorsh%28antispam%20protection%29@users.sourceforge.net">Maxim
+Iorsh</a>.<br>
+<br>
+</body>
+</html>

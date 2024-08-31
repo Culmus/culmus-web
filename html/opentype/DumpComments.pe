@@ -1,0 +1,65 @@
+#!/usr/local/bin/pfaedit
+
+/* This script for PfaEdit was created by Maxim Iorsh in 2006. It is public
+domain. You can use it in any way and for any purpose.
+
+This script dumps comments to text file in the following line format:
+
+glyph_name:glyph_comment
+
+The script supports escape character '\': when a newline is encountered in the
+comment, the escape sequence '\n' is put into the file.
+
+This script was developed and tested with build 20061025.
+*/
+
+// Try to determine whether there is an active font
+if ($firstfont == "")
+	// No font is currently loaded
+	// Try to get font name from argument
+	if ($argc == 1)
+		Error("Exiting - no font provided!");
+	else
+		myFont = $1;	// font name = first argument
+	endif
+else
+	myFont = $curfont;	// font name = current active font
+endif
+
+// Try to open the font. If this is the current font (obtained from $curfont),
+// pfaedit will do nothing. If this is a file name obtained from command line,
+// a failure may occur due to incorrect font format or missing file. Such
+// failure will cause the script to abort.
+Open(myFont);
+
+SelectAll();
+
+foreach
+	glyphname = GlyphInfo("Name");
+	glyphcomment = GlyphInfo("Comment");
+
+	if (glyphcomment != "")
+		string_out = glyphname + ":";
+
+		// Convert newline characters into "\n".
+		len = Strlen (glyphcomment);
+		i = 0; while ( i < len )
+			if (Strsub (glyphcomment, i, i+1) == Chr(10))
+				string_out = string_out + Chr(92) + "n";
+			else
+				string_out = string_out + Strsub (glyphcomment, i, i+1);
+			endif;
+		i = i+1; endloop;
+
+		string_out = string_out + Chr(10);
+
+		WriteStringToFile(string_out, "comments_dump.txt", 1);
+	endif;
+endloop
+
+SelectNone();
+
+/*****************************************************************
+* Fri Dec 22 2006 Maxim Iorsh <iorsh@math.technion.ac.il> 20061222
+- Created
+*****************************************************************/

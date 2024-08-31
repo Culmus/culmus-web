@@ -1,0 +1,55 @@
+<!--    Made by Erik Terwan    -->
+<!--   24th of November 2015   -->
+<!--        MIT License        -->
+<nav role="navigation">
+  <div id="menuToggle">
+    <!--
+    A fake / hidden checkbox is used as click reciever,
+    so you can use the :checked selector on it.
+    -->
+    <input type="checkbox" style="position: absolute;"/>
+<script>
+/* fixed menu shall always be expanded (desktop media) */
+menu_element = $(".tmenu")[0];
+pos = window.getComputedStyle(menu_element).getPropertyValue('position').toLowerCase();
+expanded = (pos == "fixed");
+if (expanded) {
+	$('#menuToggle input[type=checkbox]').prop('checked', true);
+	$('#menuToggle input').hide();
+	$('#menuToggle span').hide();
+}
+</script>    
+    <!--
+    Some spans to act as a hamburger.
+    
+    They are acting like a real hamburger,
+    not that McDonalds stuff.
+    -->
+    <span></span> <span></span> <span></span>
+    <!--
+    Too bad the menu has to be inside of the button
+    but hey, it's pure CSS magic.
+    -->
+    <ul id="menu">
+      <div style="font-size: 1.5em; font-weight: bold; padding-bottom: 1ex;" class="nomobile">כלים לשוניים</div>
+      <div class="menucell"><a class="menuitem" href="/dictionary/index.html">ראשי</a></div>
+      <div class="menucell"><a class="menuitem" href="/dictionary/nakdan.html">נקדן</a></div>
+      <div class="submenucell"><a class="submenuitem" href="/dictionary/nakdan.html#install">כיצד מתקינים</a></div>
+      <div class="submenucell"><a class="submenuitem" href="/dictionary/nakdan.html#screenshots">צילומי מסך</a></div>
+      <div class="submenucell"><a class="submenuitem" href="/dictionary/nakdan.html#license">רשיון</a></div>
+      <div class="submenucell"><a class="submenuitem" href="/dictionary/nakdan.html#errors">טיפול בתקלות</a></div>
+      <div class="menucell"><a class="menuitem" href="/dictionary/dict.html">מילון עברי-אנגלי</a></div>
+      <div class="submenucell"><a class="submenuitem" href="/dictionary/dict.html#install">כיצד מתקינים</a></div>
+      <div class="submenucell"><a class="submenuitem" href="/dictionary/dict.html#license">רשיון</a></div>
+      <div class="submenucell"><a class="submenuitem" href="/dictionary/dict.html#guts">איך זה עובד</a></div>
+      <div class="submenucell"><a class="submenuitem" href="/dictionary/dict.html#stats">סטטיסטיקה</a></div>
+      <div class="menucell"><a class="menuitem" href="/dictionary/waldstein/index.html">מילון ולדשטיין</a></div>
+      <div class="menucell"><a class="menuitem" href="/dictionary/index.html#raw">נתונים גולמיים</a></div>
+      <div class="menucell2"><a class="menuitem"  href="/dictionary/index.html#contact">יצירת קשר</a></div>
+      <div class="menucell2"><a class="menuitem" target="_top" href="/">Culmus Fonts</a></div>
+      <div>&nbsp;</div>
+      <div align="left"><a href="http://sourceforge.net/projects/culmus" target="_top"><img style="border: thin grey solid;" src="https://sflogo.sourceforge.net/sflogo.php?group_id=59410&type=13" width="120" height="30" border="0" title="Get Culmus Fonts at SourceForge.net. Fast, secure and Free Open Source software downloads"></a>
+      </div>
+    </ul>
+  </div>
+</nav>

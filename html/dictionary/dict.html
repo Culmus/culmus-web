@@ -1,0 +1,156 @@
+﻿<!DOCTYPE HTML>
+<html dir="RTL">
+<head>
+  <title>מילון קולמוס</title>
+  <LINK REL=StyleSheet HREF="culmus-dict.css" TYPE="text/css">
+  <LINK REL=StyleSheet HREF="terwan-dict.css" TYPE="text/css">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="keywords"
+ content="culmus, hebrew, dictionary, dict, english, linux, posix, free, gfdl">
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+</head>
+<body class="main">
+<div class="tmenu"></div>
+<script  language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function() {
+	$('.tmenu').load('terwan-dict.html');
+});
+</script>
+<h1>מילון עברי-אנגלי</h1>
+<p> מטרת פרויקט המילון של קולמוס היא לספק למשתמש דובר העברית מילונים חופשיים על בסיס המאגרים הקיימים ברשת ומחוץ לה. </p>
+<p>בשלב זה הפרויקט מתמקד במילון עברי-אנגלי.</p>
+<h2><A name="release"></A>העדכון האחרון: 25 בספטמבר 2014.
+<a href="https://sourceforge.net/projects/culmus/files/language_tools/dictionary/20140925/" target="_top">להורדה</a></h2>
+<b>העדכון כולל:</b>
+<ol style="list-style-type:hebrew">
+  <li> מילון עברי-אנגלי מבוסס על ויקימילון. תאריך בסיס הנתונים: 6 בספטמבר 2014 </li>
+  <li> מילון עברי-אנגלי מבוסס על לקסיקון של מיל"ה גרסה 2.0. תאריך בסיס הנתונים: 11 ביוני 2007 </li>
+  <li> מילון עברי-אנגלי של אברהם שלמה ולדשטיין. תאריך העדכון: 25 בספטמבר 2014 </li>
+</ol>
+<h2><A name="install"></A>כיצד מתקינים?</h2>
+<small>ההוראות להלן מתייחסות לאובונטו, אבל הרעיון העקרוני תקף לכל ההפצות של לינוקס.</small>
+<ol style="list-style-type:hebrew">
+  <li>מתקינים את חבילת dictd שמהווה התשתית של המילונים למיניהם. זהו למעשה שרת שיספק את ההגדרות המילוניות לתוכנת לקוח שתותקן בשלב הבא. </li>
+  <li>מתקינים את תוכנת הלקוח לפי טעמכם. משתמשי KDE יכולים להתקין את dikt או את kdict, שתיהן תוכנות קטנות וחביבות למדי.</li>
+  <li>מורידים ופורסים את חבילת המילונים העבריים מאתר זה.</li>
+  <li>נכנסים לחשבון משתמש root.</li>
+  <li>מעתיקים את הקבצים עם הסיומות dict.dz ו-index לתיקיה /usr/share/dictd/.</li>
+  <li>מריצים את הפקודה dictdconfig -w כדי לעדכן את קבצי ההגדרות של dictd במילונים החדשים.</li>
+  <li>מאתחלים מחדש את dictd באמצעות הפקודה /etc/init.d/dictd restart</li>
+  <li>פותחים את תוכנת הלקוח ונכנסים להגדרות. ב-kdict ניתן לעשות זאת ע"י בחירה של "Settings->Configure Dictionary..." ובחירה בסעיף Server.</li>
+  <li>מגדירים Hostname: localhost, ומשאירים את הפורט כמו שהוא (אמור להיות 2628).</li>
+  <li>כעת המילון מוכן לשימוש.</li>
+</ol>
+<h2><A name="license"></A>רשיון</h2>
+<ul>
+  <li>הסקריפטים להמרה בין בסיסי הנתונים השונים, להתקנה ולבנייה הם ברשות הציבור.</li>
+  <li>קובץ הנתונים של מילון עברי-אנגלי המבוסס על ויקימילון מופץ ברשיון CC BY-SA 3.0.</li>
+  <li>קובץ הנתונים של מילון עברי-אנגלי המבוסס על הלקסיקון של מיל"ה מופץ ברשיון GPL.</li>
+  <li>קובץ הנתונים של מילון עברי-אנגלי של אברהם שלמה ולדשטיין נמצא ברשות הציבור.</li>
+</ul>
+<h2><A name="guts"></A>איך זה עובד</h2>
+<p>הרעיון הוא די פשוט. לוקחים קובץ מידע של ויקימילון, למשל, והופכים אותו בשלושה צעדים לפורמט DICT שהוא הפורמט הנפוץ למילונים בלינוקס, וישנו מספר רב של תוכנות התומכות בו. בשלב ראשון סקריפט של Perl מנתח את הויקימילון, זורק מידע שאין לו שימוש כרגע, ואת המידע השימושי, כגון ערכים ותרגום שלהם, פולט לקובץ XML בפורמט פשוט שאני המצאתי לצורך זה. בשלב שני עוד סקריפט של Perl לוקח את קובץ ה-XML הפשוט וממיר את המידע שבו לפורמט FOLDOC. את ה-FOLDOC הופכים ל-DICT עם פקודה סטנדרטית. ניתן להבין את התהליך ביתר פירוט כשמעיינים בקבצי סקריפטים ובקובץ build.sh שבתוך חבילת קוד המקור.</p>
+<h2><A name="stats"></A>סטטיסטיקה</h2>
+<table class="frm">
+  <thead>
+    <tr>
+      <th rowspan="2" colspan="1">גרסה</th>
+      <th colspan="3" rowspan="1">מספר ערכים</th>
+    </tr>
+    <tr>
+      <th style="font-weight: normal;">ויקימילון</th>
+      <th style="font-weight: normal;">לקסיקון מיל"ה</th>
+      <th style="font-weight: normal;">מילון ולדשטיין</th>
+    </tr>
+  </thead>
+  <tbody align="center">
+    <tr>
+      <td>20080822</td>
+      <td>4055</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr class="alt">
+      <td>20080919</td>
+      <td>4055</td>
+      <td>5306</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>20081128</td>
+      <td>4055</td>
+      <td>5306</td>
+      <td>126</td>
+    </tr>
+    <tr class="alt">
+      <td>20090427</td>
+      <td>4523</td>
+      <td>5306</td>
+      <td>277</td>
+    </tr>
+    <tr>
+      <td>20090618</td>
+      <td>5427</td>
+      <td>5306</td>
+      <td>277</td>
+    </tr>
+    <tr class="alt">
+      <td>20110109</td>
+      <td>7906</td>
+      <td>5306</td>
+      <td>277</td>
+    </tr>
+    <tr>
+      <td>20110130</td>
+      <td>7963</td>
+      <td>5306</td>
+      <td>277</td>
+    </tr>
+    <tr class="alt">
+      <td>20120121</td>
+      <td>8285</td>
+      <td>5306</td>
+      <td>277</td>
+    </tr>
+    <tr>
+      <td>20120218</td>
+      <td>8341</td>
+      <td>5306</td>
+      <td>277</td>
+    </tr>
+    <tr class="alt">
+      <td>20120304</td>
+      <td>8358</td>
+      <td>5306</td>
+      <td>401</td>
+    </tr>
+    <tr>
+      <td>20120602</td>
+      <td>8410</td>
+      <td>5306</td>
+      <td>726</td>
+    </tr>
+    <tr class="alt">
+      <td>20120903</td>
+      <td>8441</td>
+      <td>5306</td>
+      <td>966</td>
+    </tr>
+    <tr>
+      <td>20130112</td>
+      <td>8487</td>
+      <td>5306</td>
+      <td>1282</td>
+    </tr>
+<tr class="alt">
+      <td>20140925</td>
+      <td>11393</td>
+      <td>5306</td>
+      <td>1328</td>
+    </tr>
+  </tbody>
+</table>
+</td></tr></table>
+</body>
+</html>

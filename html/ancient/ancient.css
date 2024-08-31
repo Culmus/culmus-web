@@ -1,0 +1,16 @@
+BODY.main { background: #ddddff; color: #000000 }
+
+P { text-align:justify; }
+
+DIV.quote { margin-left: 50%; font-style: italic }
+
+DIV.quoteauthor { margin-left: 50%; text-align: right; font-style: italic }
+
+TABLE.frm { background-color: #7777cc }
+
+TR.stdh { background-color: #7777cc }
+
+TR.stda { background-color: #ffffff }
+
+TR.stdb { background-color: #f0f0ff }
+

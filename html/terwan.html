@@ -1,0 +1,53 @@
+<!--    Made by Erik Terwan    -->
+<!--   24th of November 2015   -->
+<!--        MIT License        -->
+<nav role="navigation">
+  <div id="menuToggle">
+    <!--
+    A fake / hidden checkbox is used as click reciever,
+    so you can use the :checked selector on it.
+    -->
+    <input type="checkbox" style="position: absolute;"/>
+<script>
+/* fixed menu shall always be expanded (desktop media) */
+menu_element = $(".tmenu")[0];
+pos = window.getComputedStyle(menu_element).getPropertyValue('position').toLowerCase();
+expanded = (pos == "fixed");
+if (expanded) {
+	$('#menuToggle input[type=checkbox]').prop('checked', true);
+	$('#menuToggle input').hide();
+	$('#menuToggle span').hide();
+}
+</script>    
+    <!--
+    Some spans to act as a hamburger.
+    
+    They are acting like a real hamburger,
+    not that McDonalds stuff.
+    -->
+    <span></span> <span></span> <span></span>
+    <!--
+    Too bad the menu has to be inside of the button
+    but hey, it's pure CSS magic.
+    -->
+    <ul id="menu">
+    <div style="font-size: 1.5em; font-weight: bold; padding-bottom: 1ex;" class="nomobile">Culmus</div>
+      <div class="menucell"><a class="menuitem" href="/index.html">Home</a></div>
+      <div class="menucell"><a class="menuitem" href="/download.html">Downloads</a></div>
+      <div class="menucell"><a class="menuitem" href="/fancy/index.html">Fancy fonts</a></div>
+      <div class="menucell"><a class="menuitem" href="/taamim/index.html">Taamey Culmus</a></div>
+      <div class="menucell"><a class="menuitem" href="/ancient/index.html">Ancient semitic scripts</a></div>
+      <div class="menucell"><a class="menuitem" href="/summary.html">Summary of fonts</a></div>
+      <div class="menucell"><a class="menuitem" href="/developers.html">Developers' area</a></div>
+      <div class="menucell"><a class="menuitem" href="/faq.html">FAQ</a></div>
+      <div class="menucell"><a class="menuitem" href="/notes.html">Notes on design</a></div>
+      <div class="menucell2"><a class="menuitem" href="/links.html">Links and bibliography</a></div>
+      <div class="menucell"><a class="menuitem" href="/dictionary/index.html">מילון עברי-אנגלי</a></div>
+      <div class="menucell2"><a class="menuitem" href="/hspell-wrapper/index.html">Java wrapper for Hspell</a></div>
+      <div>&nbsp;</div>
+      <div align="left"><a href="http://sourceforge.net/projects/culmus" target="_top"><img style="border: thin grey solid;" src="https://sflogo.sourceforge.net/sflogo.php?group_id=59410&type=13" width="120" height="30" border="0" title="Get Culmus Fonts at SourceForge.net. Fast, secure and Free Open Source software downloads"></a></div>
+      <div align="left"><object style="border: thin grey solid; padding: 1px" width="118" height="28" type="image/svg+xml" data="/mastodon_logo.svg"></object></div>
+      <div align="left"><a href="https://mailman3.com/"><img style="border: thin grey solid;" src="/mailman_logo.png" width="120" height="30" border="0" title="Mailman 3 hosting"></a></div>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Java Wrapper for Hspell</title>
+  <LINK REL=StyleSheet HREF="../culmus.css" TYPE="text/css">
+  <LINK REL=StyleSheet HREF="../terwan.css" TYPE="text/css">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="keywords"
+ content="culmus, hebrew, hspell, spellchecker, java, jni, linux, free, gpl">
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+</head>
+<body class="main">
+<div class="tmenu"></div>
+<script  language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function() {
+	$('.tmenu').load('../terwan.html');
+});
+</script>
+<h1>Java Wrapper for Hspell</h1>
+<p>This package contains a Java wrapper for <a target="_top" href="http://hspell.ivrix.org.il/">hspell library</a>. Hspell was written by Nadav Har'El and Dan Kenigsberg.</p>
+<p>A new dynamic library <tt>libhspellj.so</tt> duplicates the existing static library <tt>libhspell.a</tt> and adds Java-specific entry points and the <tt>HSpellWrapper.jar</tt> Java library. The wrapper uses the Java Native Interface (JNI) technology.</p>
+
+<h2>Download: <a target="_top" href="http://sourceforge.net/projects/culmus/files/language_tools/hspell-java/hspell1.1-java-20110814.tar.gz/download">hspell1.1-java-20110814.tar.gz</a> </h2>
+
+<p>The package mostly duplicates the contents of the official release, with a few additions and modifications. I tried to modify the existing files as little as possible.</p>
+<ul>
+<li><tt>configure.in</tt> and <tt>Makefile.in</tt> were modified to create a dynamic library alongside the static one and to accomodate a new target <b><tt>java</tt></b>.</li>
+<li><tt>aux/</tt> directory contains some scripts which "configure" now needs. It look like carrying them around is a drawback of autoconf, and I could find no way to avoid it.</li>
+<li><tt>LibHSpellJ.h</tt>, <tt>LibHSpellJ.c</tt> and <tt>LibHSpellJ.java</tt> contain the new code.</li>
+<li><tt>HSpellWrapper.java</tt> contains a cleaned up wrapper class, but it is not strictly necessary and may rather serve as an example of calling the low-level <tt>LibHSpellJ</tt> class.</li>
+</ul>
+<p>Please note that if you want to run <tt>autoconf</tt>, you will need to install <b><tt>autoconf-archive</tt></b> and <b><tt>libtool</tt></b> and run
+<pre>aclocal -I /usr/share/autoconf-archive/ -I /usr/share/libtool/</pre> before it.</p>
+<p>Unfortunately, I'm not quite good at autotooling, so my Makefile.in additions are rather messy.</p> 
+
+<h2>Building and installing</h2>
+<p>Unpack:
+<pre>
+tar -zxvf hspellj-1.1.tar.gz
+cd hspellj-1.1
+</pre>
+<p>Build:
+<pre>
+./configure --enable-java-wrapper
+make java
+</pre>
+<p>Install:
+<pre>
+sudo make install
+</pre>
+
+<h2>License</h2>
+<p>This software is licensed under the GNU General Public License (GPL). A special right is given to Nadav Har'El and Dan Kenigsberg to perform any action on my changes, including assuming ownership and licensing them under any terms they find appropriate.</p>
+
+<h2>Contact</h2>
+<p> For all questions regarding the wrapper please contact <a
+ href="mailto:iorsh%28at%29users.sourceforge.net">Maxim
+Iorsh</a> (&#1502;&#1511;&#1505;&#1497;&#1501; &#1497;&#1493;&#1512;&#1513;).<br>
+</p>
+</body>
+</html>
