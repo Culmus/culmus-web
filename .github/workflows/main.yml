@@ -1,0 +1,22 @@
+name: Deploy to SourceForge web
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Deploy to SourceForge
+      uses: easingthemes/ssh-deploy@v5.1.0
+      with:
+          SSH_PRIVATE_KEY: ${{ secrets.SF_SSH_PRIVATE_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "html/"
+          REMOTE_HOST: web.sourceforge.net
+          REMOTE_USER: iorsh
+          TARGET: /home/project-web/culmus/htdocs/
+            
