@@ -26,7 +26,7 @@ SPAN.blackframe { border: 1px solid black; padding-left:2px; padding-right:2px; 
 
 TABLE.frm { border-collapse:collapse; }
 TABLE.frm TR { background-color: #ffffff; }
-TABLE.frm TR.alt { background-color: #f0f0ff; }
+TABLE.frm TR:nth-child(even) { background-color: #f0f0ff; }
 TABLE.frm TH { border: 1px solid #7777cc; padding:3px; background-color: #7777cc; }
 TABLE.frm TD { border: 1px solid #7777cc; padding:3px; vertical-align: top; }
 

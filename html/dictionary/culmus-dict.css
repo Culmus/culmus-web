@@ -25,7 +25,7 @@ DIV.quoteauthor { margin-left: 50%; text-align: right; font-style: italic }
 
 TABLE.frm { border-collapse:collapse; margin-left: auto; margin-right: auto; }
 TABLE.frm TR { background-color: #ffffff; }
-TABLE.frm TR.alt { background-color: #f0fff0; }
+TABLE.frm TR:nth-child(even) { background-color: #f0fff0; }
 TABLE.frm TH { border: 1px solid #77cc77; padding:3px; background-color: #77cc77; }
 TABLE.frm TD { border: 1px solid #77cc77; padding:3px; vertical-align: top; }
 
