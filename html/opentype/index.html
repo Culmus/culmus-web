@@ -3,50 +3,46 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE>OpenType support for Hebrew fonts</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Linux)">
+	<LINK REL=StyleSheet HREF="../culmus.css" TYPE="text/css">
+	<LINK REL=StyleSheet HREF="../terwan.css" TYPE="text/css">
 	<META NAME="AUTHOR" CONTENT="Maxim Iorsh">
-	<META NAME="CREATED" CONTENT="20061222;10083900">
-	<META NAME="CHANGED" CONTENT="20070106;21453700">
-	<STYLE>
-	<!--
-		H1 { color: #000000 }
-		P { color: #000000; text-align: justify }
-		H2 { color: #000000 }
-		PRE { color: #000000 }
-		A:link { color: #000099 }
-		A:visited { color: #551a8b }
-	-->
-	</STYLE>
 </HEAD>
-<BODY LANG="en-US" TEXT="#000000" LINK="#000099" VLINK="#551a8b" BGCOLOR="#ddddff" DIR="LTR">
+<body class="main">
+<div class="tmenu"></div>
+<script  language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function() {
+	$('.tmenu').load('terwan.html');
+});
+</script>
 <H1>OpenType support for Hebrew fonts</H1>
 <P>This page presents some FontForge scripts which I find useful in
 creating OpenType fonts. An example can be found at the end of the
 page.</P>
 <H2>Scripts</H2>
-<UL TYPE=SQUARE>
-	<LI><P><A HREF="AddHebrewGSUB.pe">AddHebrewGSUB.pe</A> – defines
+<UL>
+	<LI><P><A HREF="https://github.com/Culmus/fontforge-scripts/blob/master/fontforge_python/AddHebrewGSUB.py">AddHebrewGSUB.py</A> – defines
 	standard substitutions and ligatures</P>
-	<LI><P><A HREF="AddHebrewGPOS.pe">AddHebrewGPOS.pe</A> – defines
+	<LI><P><A HREF="https://github.com/Culmus/fontforge-scripts/blob/master/fontforge_python/AddHebrewGPOS.py">AddHebrewGPOS.py</A> – defines
 	positioning of diacritics based on information provided in the glyph
 	comments in a special format.</P>
-	<LI><P><A HREF="InitHebrewGlyphData.pe">InitHebrewGlyphData.pe</A> –
-	initializes static data for AddHebrewGPOS.pe.</P>
+	<LI><P><A HREF="https://github.com/Culmus/fontforge-scripts/blob/master/fontforge_python/InitHebrewGlyphData.py">InitHebrewGlyphData.py</A> –
+	initializes static data for <code>AddHebrewGPOS.py</code>.</P>
 	<LI><P><A HREF="DumpComments.pe">DumpComments.pe</A> – auxiliary
 	script which dumps comments from the glyph info to an external text
 	file.</P>
 	<LI><P><A HREF="LoadComments.pe">LoadComments.pe</A> – auxiliary
 	script which loads comments from an external file produced by
-	DumpComments.pe into a font.</P>
-	<LI><P><A HREF="Kern2Comments.pe">Kern2Comments.pe</A> – auxiliary
+<code>DumpComments.pe</code> into a font.</P>
+	<LI><P><A HREF="https://github.com/Culmus/fontforge-scripts/blob/master/fontforge_python/Kern2Comments.py">Kern2Comments.py</A> – auxiliary
 	script which converts kerning data into anchor positioning data in
 	the glyph comments.</P>
 </UL>
 <H2>Glyph substitution</H2>
 <P>Hebrew typefaces may include several features for glyph
 substitution. These features can be created semi-automatically using
-the provided script AddHebrewGSUB.pe. The features include</P>
-<UL TYPE=SQUARE>
+the provided script <code>AddHebrewGSUB.py</code>. The features include</P>
+<UL>
 	<LI><P><B><I>Dagesh</I> ligatures.</B> All consonant glyphs except
 	the final forms, followed by <I>dagesh</I> glyph, can be replaced
 	with an appropriate composite glyph.<BR><IMG SRC="beth-dagesh.png" NAME="Beth dagesh" ALIGN=BOTTOM WIDTH=254 HEIGHT=34 BORDER=0></P>
@@ -69,7 +65,7 @@ the provided script AddHebrewGSUB.pe. The features include</P>
 	feature to allow that. It seems that no software supports this
 	feature except Adobe InDesign.<BR><IMG SRC="wide-dalet.png" NAME="Justification alternative" ALIGN=BOTTOM WIDTH=192 HEIGHT=34 BORDER=0></P>
 	<LI><P><B>Miscellaneous ligatures and substitutions.</B></P>
-	<UL TYPE=SQUARE>
+	<UL>
 		<LI><P><I>Final kaf</I> with <I>shwa</I> / <I>qamats</I>. The <I>final
 		kaf</I> is the only final form which may bear diacritics. The
 		diacritics are usually placed above the normal diacritics line,
@@ -115,27 +111,27 @@ Metrics Window) to define a diacritical mark position in the form of
 a kerning pair between the basic glyph (consonant) and the mark
 (vowel). This view provides an immediate visual feedback, which
 greatly simplifies the task of the fine tuning. Then I run script
-Kern2Comments.pe which converts the kerning pair to a special form of
+<code>Kern2Comments.py</code> which converts the kerning pair to a special form of
 comment stored in the appropriate basic glyph. Another script
 AddHebrewGPOS.pe converts these comments into final OpenType
 information.</P>
-<P>The most interesting script in this process is AddHebrewGPOS.pe,
+<P>The most interesting script in this process is <code>AddHebrewGPOS.py</code>,
 as it creates the actual OpenType anchors which set the positioning
 of <I>nikkud</I>. The positioning values for the script are stored in
 a special format inside glyph comments. For example, the glyph <I>lamed</I>
 may contain the following comment:</P>
-<PRE STYLE="margin-left: 0.79in">%DiaToBase1=200
+<blockquote><PRE>%DiaToBase1=200
 %DiaToBase2=220
 %DiaToBaseU=220
-%DiaToBaseO=-70</PRE><P>
-This comment can be translated as follows:</P>
-<P ALIGN=LEFT STYLE="margin-left: 0.79in">The anchor DiaToBase1 for
+%DiaToBaseO=-70</PRE></blockquote>
+<p>This comment can be translated as follows:</P>
+<blockquote>The anchor DiaToBase1 for
 narrow diacritics (<I>hiriq</I>, <I>shwa</I>) shall be located at
 (200,0)<BR>The anchor DiaToBase2 for medium-width diacritics (<I>tsere</I>,
 <I>patah</I>, <I>qamats</I>, <I>segol</I>) shall be located at
 (220,0)<BR>The anchor DiaToBaseU for <I>qubutz</I> shall be located
 at (220, 0)<BR>The anchor DiaToBaseO for <I>holam haser</I> shall be
-located at (-70,0)</P>
+located at (-70,0)</blockquote>
 <P>First the script creates five anchor classes named
 DiaToBase[123UO]. In this list 1 stands for narrow marks, 2 stands
 for medium-width marks, 3 stands for <I>hataf</I> marks, U stands for
@@ -152,29 +148,29 @@ consonants have anchor DiaToBase3 defined.</P>
 <P>The script supports the notion of glyph equivalence, e.g. comments
 stored for <I>lamed</I> are applied on <I>lamed dagesh</I> too, since
 these two glyphs should have similar diacritics positioning.</P>
-<P>An auxiliary script InitHebrewGlyphData.pe defines static arrays
-of vowels and consonants for use in AddHebrewGPOS.pe. It maintains
+<P>An auxiliary script <code>InitHebrewGlyphData.py</code> defines static arrays
+of vowels and consonants for use in <code>AddHebrewGPOS.py</code>. It maintains
 consonant equivalence tables, describing glyphs which should be
 considered equivalent for the purpose of diacritics positioning. It
 also maintains vowel tables which describe anchor classes and marks
 corresponding to these classes.</P>
-<P>Another two auxiliary scripts DumpComments.pe and LoadComments.pe
+<P>Another two auxiliary scripts <code>DumpComments.pe</code> and <code>LoadComments.pe</code>
 dump glyph comments to external file comments_dump.txt, and load them
 accordingly.</P>
-<H2>Example</H2>
+<H2>Example [outdated]</H2>
 <P>The package below contains a sample source SFD file and the
 resulting OpenType font.</P>
 <P>In order to get the OpenType font from the source file, the
 following should be done:</P>
 <OL>
-	<LI><P>Download the scripts AddHebrewGSUB.pe,  AddHebrewGPOS.pe and 
-	InitHebrewGlyphData.pe.</P>
+	<LI><P>Download the scripts <code>AddHebrewGSUB.py</code>,  <code>AddHebrewGPOS.py</code> and 
+	<code>InitHebrewGlyphData.py</code>.</P>
 	<LI><P>Open the file David-Medium.sfd in the FontForge.</P>
-	<LI><P>Run the script  AddHebrewGSUB.pe by choosing “File-&gt;Execute
+	<LI><P>Run the script <code>AddHebrewGSUB.py</code> by choosing “File-&gt;Execute
 	script...”, “Call...” and selecting the script from the
 	download location.</P>
 	<LI><P>Perform manual instructions listed in the script.</P>
-	<LI><P>Run the script AddHebrewGPOS.pe.</P>
+	<LI><P>Run the script <code>AddHebrewGPOS.py</code>.</P>
 	<LI><P>Export the font as OpenType by choosing “File-&gt;Generate
 	Fonts...”, type “OpenType (CFF)”, “Save”.</P>
 </OL>
